@@ -3,6 +3,7 @@ import Root from "./utilis/Root";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoutes from "./utilis/ProtectedRoutes";
+import Categories from "./components/Categories";
 
 function App() {
   return (
@@ -38,10 +39,11 @@ function App() {
           />
           <Route
             path="categories"
-            element={<h1 className="text-3xl font-bold">Admin Categories</h1>}/>
+            element={<Categories/>}/>
             <Route
             path="products"
-            element={<h1 className="text-3xl font-bold">Admin Products</h1>}/>
+            element={<h1 className="text-3xl font-bold" >products</h1>}
+            />
             <Route
             path="supplier"
             element={<h1 className="text-3xl font-bold">supplier</h1>}/>
