@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoutes from "./utilis/ProtectedRoutes";
 import Categories from "./components/Categories";
+import Suppliers from "./components/Suppliers";
 
 function App() {
   return (
@@ -46,7 +47,8 @@ function App() {
             />
             <Route
             path="supplier"
-            element={<h1 className="text-3xl font-bold">supplier</h1>}/>
+            element={<Suppliers/>}
+            />
             <Route
             path="orders"
             element={<h1 className="text-3xl font-bold">orders</h1>}/>
