@@ -6,7 +6,7 @@ import ProtectedRoutes from "./utilis/ProtectedRoutes";
 import Categories from "./components/Categories";
 import Suppliers from "./components/Suppliers";
 
-function App() {
+ function App() {
   return (
     <Router>
       <Routes>
@@ -69,4 +69,5 @@ function App() {
   );
 }
 
-export default App;
+
+export default App

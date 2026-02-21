@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
 
   // Load user from localStorage when app starts
   const [user, setUser] = useState(() => {
-    
     const storedUser = localStorage.getItem("pos-user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
