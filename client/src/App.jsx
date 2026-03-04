@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoutes from "./utilis/ProtectedRoutes";
 import Categories from "./components/Categories";
 import Suppliers from "./components/Suppliers";
+import Users from "./components/Users";
 
 function App() {
   return (
@@ -54,7 +55,8 @@ function App() {
             element={<h1 className="text-3xl font-bold">orders</h1>}/>
             <Route
             path="users"
-            element={<h1 className="text-3xl font-bold">Admin Users</h1>}/>
+            element={<Users/>}
+            />
             
         </Route>
 
