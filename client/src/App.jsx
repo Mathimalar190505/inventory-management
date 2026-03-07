@@ -6,6 +6,7 @@ import ProtectedRoutes from "./utilis/ProtectedRoutes";
 import Categories from "./components/Categories";
 import Suppliers from "./components/Suppliers";
 import Users from "./components/Users";
+import Products from "./components/Products";
 
  function App() {
   return (
@@ -44,7 +45,7 @@ import Users from "./components/Users";
             element={<Categories/>}/>
             <Route
             path="products"
-            element={<h1 className="text-3xl font-bold" >products</h1>}
+            element={<Products/>}
             />
             <Route
             path="supplier"

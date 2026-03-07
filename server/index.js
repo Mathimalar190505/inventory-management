@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.js';
 import categoryRoutes from './routes/category.js';
 import supplierRoutes from './routes/supplier.js';
 import userRoutes from './routes/user.js';
+import productRoutes from './routes/product.js';
 
 dotenv.config();
 
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use('/api/auth',authRoutes);
 app.use('/api/category',categoryRoutes);
 app.use('/api/supplier',supplierRoutes);
-app.use('/api/users',userRoutes);
+app.use('/api/users',userRoutes)
+app.use('/api/products',productRoutes);
 // app.get("/", (req, res) => {
 //   res.send("API running without MongoDB 🚀");
 // });
