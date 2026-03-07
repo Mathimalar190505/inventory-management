@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     // setToken(token);
 
     localStorage.setItem("pos-user", JSON.stringify(userData));
-    localStorage.setItem("pos-token", token);
+    localStorage.setItem("token", token);
   };
 
   // 🚪 Logout function
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     // setToken(null);
 
     localStorage.removeItem("pos-user");
-    localStorage.removeItem("pos-token");
+    localStorage.removeItem("token");
   };
 
   return (

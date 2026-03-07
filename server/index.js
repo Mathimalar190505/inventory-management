@@ -5,6 +5,7 @@ import connectDB from "./db/connection.js";
 import authRoutes from './routes/auth.js';
 import categoryRoutes from './routes/category.js';
 import supplierRoutes from './routes/supplier.js';
+import userRoutes from './routes/user.js';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ app.use(express.json());
 app.use('/api/auth',authRoutes);
 app.use('/api/category',categoryRoutes);
 app.use('/api/supplier',supplierRoutes);
-
+app.use('/api/users',userRoutes);
 // app.get("/", (req, res) => {
 //   res.send("API running without MongoDB 🚀");
 // });
