@@ -23,26 +23,25 @@ const Login = () => {
         password,
       });
 
-      if (response.data.success) {
-        await login(response.data.user, response.data.token);
-
-        // Navigate based on role
-        setTimeout(() => {
-          if (response.data.user.role === "admin") navigate("/admin/dashboard");
-          else if (response.data.user.role === "customer") navigate("/customer/dashboard");
-          else navigate("/unauthorized");
-        }, 0);
-      } else {
-        setError(response.data.message || "Login failed");
-      }
-    } catch (err) {
-      if (err.response) setError(err.response.data.message);
-      else setError("Server error");
-    } finally {
-      setLoading(false);
+    if (response.data.success) {
+        await login(response.data.user,response.data.token);
+        if(response.data.user.role === "admin"){
+           navigate("/admin/dashboard"); 
+        } else {
+            navigate("/customer-dashboard");
+        }
+    } else {
+        alert(response.data.error);
     }
-  };
 
+  } catch (error) {
+     if(error.response) {
+    setError(error.response.data.message);
+     }
+  } finally {
+     setLoading(false);
+  }  
+};
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
       <h1 className="text-3xl text-white mb-6">Inventory Management System</h1>

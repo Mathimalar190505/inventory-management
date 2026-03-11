@@ -16,14 +16,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Root redirect */}
         <Route path="/" element={<Root />} />
 
-        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
-        <Route path="/unauthorized" element={<p className="font-bold text-3xl mt-20 ml-20">Unauthorized</p>} />
+        <Route
+          path="/unauthorized"
+          element={<p className="font-bold text-3xl mt-20 ml-20">Unauthorized</p>}
+        />
 
-        {/* Admin Dashboard */}
         <Route
           path="/admin/dashboard"
           element={
@@ -40,7 +40,6 @@ function App() {
           <Route path="users" element={<Users />} />
         </Route>
 
-        {/* Customer Dashboard */}
         <Route
           path="/customer/dashboard"
           element={
@@ -50,13 +49,13 @@ function App() {
           }
         >
           <Route index element={<CustomerProducts />} />
-          <Route path='orders' element={<Orders/>}/>
-          <Route path='profile' element={<Profile/>}/>
-          <Route path='products' element={<Products/>}/>
-            
+          <Route path="orders" element={<Orders />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="products" element={<Products />} />
         </Route>
+
         <Route path="/admin/dashboard/logout" element={<Logout />} />
-<Route path="/customer/dashboard/logout" element={<Logout />} />
+        <Route path="/customer/dashboard/logout" element={<Logout />} />
       </Routes>
     </Router>
   );
