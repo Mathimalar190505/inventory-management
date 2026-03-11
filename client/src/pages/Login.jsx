@@ -1,69 +1,59 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router";
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
-    const [loading , setLoading] = useState(false);
-    const navigate = useNavigate();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-    const {login} = useAuth();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-   
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError(null);
- 
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
 
-  try {
-    const response = await axios.post("http://localhost:5000/api/auth/login", {
-    email, password});
+      if (response.data.success) {
+        await login(response.data.user, response.data.token);
 
-    if (response.data.success) {
-        await login(response.data.user,response.data.token);
-        if(response.data.user.role === "admin"){
-           navigate("/admin/dashboard"); 
-        } else {
-            navigate("/customer-dashboard");
-        }
-    } else {
-        alert(response.data.error);
+        // Navigate based on role
+        setTimeout(() => {
+          if (response.data.user.role === "admin") navigate("/admin/dashboard");
+          else if (response.data.user.role === "customer") navigate("/customer/dashboard");
+          else navigate("/unauthorized");
+        }, 0);
+      } else {
+        setError(response.data.message || "Login failed");
+      }
+    } catch (err) {
+      if (err.response) setError(err.response.data.message);
+      else setError("Server error");
+    } finally {
+      setLoading(false);
     }
+  };
 
-  } catch (error) {
-     if(error.response) {
-    setError(error.response.data.message);
-     }
-  } finally {
-     setLoading(false);
-  }  
-};
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
       <h1 className="text-3xl text-white mb-6">Inventory Management System</h1>
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-        
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Login
-        </h1>
-        {error && (
-          <div className="bg-red-200 text-red-700 p-2 mb-4 rounded">
-            {error}
-          </div>
-        )}
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Login</h1>
+
+        {error && <div className="bg-red-200 text-red-700 p-2 mb-4 rounded">{error}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-600 mb-1"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1">
               Email
             </label>
             <input
@@ -77,10 +67,7 @@ const handleSubmit = async (e) => {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-600 mb-1"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-1">
               Password
             </label>
             <input
@@ -97,12 +84,10 @@ const handleSubmit = async (e) => {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
           >
-           {loading ? "Loading..." : "Login"}
+            {loading ? "Loading..." : "Login"}
           </button>
-
         </form>
       </div>
-
     </div>
   );
 };

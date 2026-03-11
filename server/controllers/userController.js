@@ -97,3 +97,75 @@ export const deleteUser = async (req, res) => {
     });
   }
 };
+
+export const getUser = async(req,res)=>{
+  try{
+    const userId = req.user._id;
+    const user = await User.findById(userId).select('-password');
+    if(!user){
+      return res.status(404).json({success:false,message:"user not found"});
+    }
+    return res.status(200).json({success:true,user})
+  }
+  catch (error) {
+    console.error("Getting user profile Error:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+}
+}
+export const updateProfile = async (req, res) => {
+  try {
+
+    const userId = req.user._id;
+
+    const body = req.body || {};
+
+    const {
+      name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      password
+    } = body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.phone = phone || user.phone;
+    user.address = address || user.address;
+    user.city = city || user.city;
+    user.state = state || user.state;
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user
+    });
+
+  } catch (error) {
+    console.error("Update profile error:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error"
+    });
+  }
+};
