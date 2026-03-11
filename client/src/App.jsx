@@ -7,27 +7,23 @@ import Categories from "./components/Categories";
 import Suppliers from "./components/Suppliers";
 import Users from "./components/Users";
 import Products from "./components/Products";
+import CustomerProducts from "./components/CustomerProducts.jsx";
+import Orders from "./components/Orders.jsx";
+import Profile from "./components/Profile.jsx";
+import Logout from "./pages/Logout";
 
- function App() {
+function App() {
   return (
     <Router>
       <Routes>
-
-        {/* Root redirect controller */}
         <Route path="/" element={<Root />} />
 
-        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route
           path="/unauthorized"
-          element={
-            <p className="font-bold text-3xl mt-20 ml-20">
-              Unauthorized
-            </p>
-          }
+          element={<p className="font-bold text-3xl mt-20 ml-20">Unauthorized</p>}
         />
 
-        {/* Admin Dashboard */}
         <Route
           path="/admin/dashboard"
           element={
@@ -36,41 +32,33 @@ import Products from "./components/Products";
             </ProtectedRoutes>
           }
         >
-          <Route
-            index
-            element={<h1 className="text-3xl font-bold">Admin Summary</h1>}
-          />
-          <Route
-            path="categories"
-            element={<Categories/>}/>
-            <Route
-            path="products"
-            element={<Products/>}
-            />
-            <Route
-            path="supplier"
-            element={<Suppliers/>}
-            />
-            <Route
-            path="orders"
-            element={<h1 className="text-3xl font-bold">orders</h1>}/>
-            <Route
-            path="users"
-            element={<Users/>}
-            />
-            
+          <Route index element={<h1 className="text-3xl font-bold">Admin Summary</h1>} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="products" element={<Products />} />
+          <Route path="supplier" element={<Suppliers />} />
+          <Route path="orders" element={<h1 className="text-3xl font-bold">Orders</h1>} />
+          <Route path="users" element={<Users />} />
         </Route>
 
-        {/* Customer Dashboard */}
         <Route
           path="/customer/dashboard"
-          element={<h1>Customer dashboard</h1>}
-        />
+          element={
+            <ProtectedRoutes requireRole={["customer"]}>
+              <Dashboard />
+            </ProtectedRoutes>
+          }
+        >
+          <Route index element={<CustomerProducts />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="products" element={<Products />} />
+        </Route>
 
+        <Route path="/admin/dashboard/logout" element={<Logout />} />
+        <Route path="/customer/dashboard/logout" element={<Logout />} />
       </Routes>
     </Router>
   );
 }
 
-
-export default App
+export default App;

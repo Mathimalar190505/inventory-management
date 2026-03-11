@@ -1,25 +1,15 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const ProtectedRoutes = ({ children, requireRole }) => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  const { user, token } = useAuth();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
+  // Not logged in → redirect to login
+  if (!user || !token) return <Navigate to="/login" replace />;
 
-    if (!requireRole.includes(user.role)) {
-      navigate("/unauthorized");
-      return;
-    }
-  }, [user, navigate, requireRole]);
-
-  if (!user) return null;
-  if (!requireRole.includes(user.role)) return null;
+  // Role check (if requireRole is provided)
+  if (requireRole && !requireRole.includes(user.role)) return <Navigate to="/unauthorized" replace />;
 
   return children;
 };
