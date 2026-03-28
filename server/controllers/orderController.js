@@ -63,7 +63,23 @@ const getOrders = async (req, res) => {
         message: "User not authenticated"
       });
     }
-    const orders = await Order.find({ customer: req.user._id })
+    let orders;
+    
+    if (req.user?.role === "admin") {
+       orders = await Order.find()
+        .populate({
+          path: "product",
+          select: "name price categoryId",
+          populate: {
+            path: "categoryId",
+            select: "categoryName"
+          }
+        })
+        .populate("customer", "name email")
+        .sort({ orderDate: -1 });
+
+    } else {
+     orders = await Order.find({ customer: req.user._id })
   .populate({
     path: "product",
     select: "name price categoryId",
@@ -73,6 +89,7 @@ const getOrders = async (req, res) => {
     }
   })
   .sort({ orderDate: -1 });
+}
   res.status(200).json({
   success: true,
   orders

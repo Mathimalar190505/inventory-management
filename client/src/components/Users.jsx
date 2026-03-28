@@ -21,7 +21,7 @@ const Users = () => {
           "http://localhost:5000/api/users/",
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
             },
           }
         );

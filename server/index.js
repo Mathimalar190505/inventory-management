@@ -8,6 +8,7 @@ import supplierRoutes from './routes/supplier.js';
 import userRoutes from './routes/user.js';
 import productRoutes from './routes/product.js';
 import orderRoutes from './routes/order.js';
+import dashboardRoutes from './routes/dashboard.js';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/api/supplier',supplierRoutes);
 app.use('/api/users',userRoutes)
 app.use('/api/products',productRoutes);
 app.use('/api/orders',orderRoutes);
+app.use('/api/dashboard',dashboardRoutes);
 // app.get("/", (req, res) => {
 //   res.send("API running without MongoDB 🚀");
 // });
