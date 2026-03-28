@@ -40,7 +40,6 @@ const Suppliers = () => {
       );
 
       setSuppliers(response.data.suppliers || []);
-      setFilteredSuppliers(response.data.suppliers)
     } catch (error) {
       console.error("Error fetching suppliers", error);
     } finally {
@@ -150,7 +149,7 @@ const Suppliers = () => {
   };
 
   const filteredSuppliers = suppliers.filter((supplier) =>
-    supplier.name.toLowerCase().includes(search.toLowerCase())
+    supplier.name?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (

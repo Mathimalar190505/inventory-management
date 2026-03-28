@@ -13,6 +13,7 @@ const menuItems = [
   { name: "Suppliers", path: "/admin/dashboard/supplier", icon: <FaTruck />, isParent: false },
   { name: "Orders", path: "/admin/dashboard/orders", icon: <FaShoppingCart />, isParent: false },
   { name: "Users", path: "/admin/dashboard/users", icon: <FaUsers />, isParent: false },
+  { name: "Profile", path: "/admin/dashboard/profile", icon: <FaUsers />, isParent: false },
   { name: "Logout", path: "/admin/dashboard/logout", icon: <FaSignOutAlt />, isParent: false }
 ];
 const customerItems = [

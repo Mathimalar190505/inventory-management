@@ -8,9 +8,10 @@ import Suppliers from "./components/Suppliers";
 import Users from "./components/Users";
 import Products from "./components/Products";
 import CustomerProducts from "./components/CustomerProducts.jsx";
-import Orders from "./components/Orders.jsx";
 import Profile from "./components/Profile.jsx";
 import Logout from "./pages/Logout";
+import Summary from "./components/Summary.jsx";
+import Orders from "./components/Orders.jsx";
 
 function App() {
   return (
@@ -32,12 +33,13 @@ function App() {
             </ProtectedRoutes>
           }
         >
-          <Route index element={<h1 className="text-3xl font-bold">Admin Summary</h1>} />
+          <Route index element={<Summary/>} />
           <Route path="categories" element={<Categories />} />
           <Route path="products" element={<Products />} />
           <Route path="supplier" element={<Suppliers />} />
-          <Route path="orders" element={<h1 className="text-3xl font-bold">Orders</h1>} />
+          <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         <Route

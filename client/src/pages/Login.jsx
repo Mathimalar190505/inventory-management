@@ -24,11 +24,12 @@ const Login = () => {
       });
 
     if (response.data.success) {
+        localStorage.setItem("pos-token",response.data.token);
         await login(response.data.user,response.data.token);
         if(response.data.user.role === "admin"){
            navigate("/admin/dashboard"); 
         } else {
-            navigate("/customer-dashboard");
+            navigate("/customer/dashboard");
         }
     } else {
         alert(response.data.error);
