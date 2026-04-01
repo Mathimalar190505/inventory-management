@@ -26,7 +26,6 @@ const Suppliers = () => {
     }));
   };
 
-  // 🔥 Moved outside useEffect
   const fetchSuppliers = async () => {
     setLoading(true);
     try {
@@ -140,7 +139,7 @@ const Suppliers = () => {
 
       if (response.data.success) {
         alert("Supplier deleted successfully");
-        fetchSuppliers(); // refresh list
+        fetchSuppliers();
       }
     } catch (error) {
       console.error("Error deleting supplier:", error);
@@ -153,135 +152,107 @@ const Suppliers = () => {
   );
 
   return (
-    <div className="w-full h-full flex flex-col gap-4 p-4">
-      <h1 className="text-2xl font-bold mb-4">Supplier Management</h1>
+    <div className="p-8 min-h-screen bg-[#e5e7eb]">
+      <div className="max-w-7xl mx-auto bg-[#f3f4f6] rounded-3xl shadow-inner p-6">
+      <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Supplier Management</h1>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search suppliers..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border p-2 rounded w-full max-w-md mb-4"
+          className="w-full sm:max-w-md px-4 py-2 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded mb-4 cursor-pointer"
+          className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition"
           onClick={() => setAddModal(true)}
         >
-          Add Supplier
+          + Add Supplier
         </button>
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <div className="flex justify-center py-10">
+          <div className="animate-spin h-10 w-10 border-4 border-gray-300 border-t-blue-500 rounded-full"></div>
+        </div>
       ) : (
-        <div>
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">S No</th>
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Email</th>
-              <th className="border p-2">Phone</th>
-              <th className="border p-2">Address</th>
-              <th className="border p-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredSuppliers.map((supplier, index) => (
-              <tr key={supplier._id}>
-                <td className="border p-2">{index + 1}</td>
-                <td className="border p-2">{supplier.name}</td>
-                <td className="border p-2">{supplier.email}</td>
-                <td className="border p-2">{supplier.number}</td>
-                <td className="border p-2">{supplier.address}</td>
-                <td className="border p-2">
-                  <button
-                    className="px-2 py-1 bg-yellow-500 text-white rounded mr-2"
-                    onClick={() => handleEdit(supplier)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="px-2 py-1 bg-red-500 text-white rounded"
-                    onClick={() => handleDelete(supplier._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+              <tr>
+                <th className="p-3">#</th>
+                <th className="p-3">Name</th>
+                <th className="p-3">Email</th>
+                <th className="p-3">Phone</th>
+                <th className="p-3">Address</th>
+                <th className="p-3 text-center">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {filteredSuppliers.length === 0 && <div>No records</div>}
+            </thead>
+            <tbody>
+              {filteredSuppliers.map((supplier, index) => (
+                <tr key={supplier._id} className="border-t hover:bg-gray-50 transition">
+                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3 font-medium">{supplier.name}</td>
+                  <td className="p-3">{supplier.email}</td>
+                  <td className="p-3">{supplier.number}</td>
+                  <td className="p-3">{supplier.address}</td>
+                  <td className="p-3 text-center space-x-2">
+                    <button
+                      className="px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white rounded-lg text-xs"
+                      onClick={() => handleEdit(supplier)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs"
+                      onClick={() => handleDelete(supplier._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {filteredSuppliers.length === 0 && (
+            <div className="text-center py-6 text-gray-400">No suppliers found</div>
+          )}
         </div>
       )}
 
       {addModal && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-md w-1/3 relative">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md relative">
             <h2 className="text-xl font-bold mb-4">
               {editSupplier ? "Edit Supplier" : "Add Supplier"}
             </h2>
 
             <button
-              className="absolute top-2 right-3 text-lg font-bold"
+              className="absolute top-3 right-4 text-gray-500 hover:text-black"
               onClick={closeModal}
             >
-              X
+              ✕
             </button>
 
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Supplier Name"
-                className="border p-2 rounded"
-              />
+              <input name="name" value={formData.name} onChange={handleChange} placeholder="Supplier Name" className="input" />
+              <input name="email" value={formData.email} onChange={handleChange} placeholder="Supplier Email" className="input" />
+              <input name="number" value={formData.number} onChange={handleChange} placeholder="Phone Number" className="input" />
+              <input name="address" value={formData.address} onChange={handleChange} placeholder="Address" className="input" />
 
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Supplier Email"
-                className="border p-2 rounded"
-              />
-
-              <input
-                type="text"
-                name="number"
-                value={formData.number}
-                onChange={handleChange}
-                placeholder="Phone Number"
-                className="border p-2 rounded"
-              />
-
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="Address"
-                className="border p-2 rounded"
-              />
-
-              <div className="flex space-x-2">
-                <button
-                  type="submit"
-                  className="w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-600"
-                >
-                  {editSupplier ? "Save Changes" : "Add Supplier"}
+              <div className="flex gap-2 mt-2">
+                <button className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-xl">
+                  {editSupplier ? "Save" : "Add"}
                 </button>
 
                 {editSupplier && (
                   <button
                     type="button"
-                    className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600"
                     onClick={closeModal}
+                    className="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-xl"
                   >
                     Cancel
                   </button>
@@ -291,6 +262,22 @@ const Suppliers = () => {
           </div>
         </div>
       )}
+
+      {/* Reusable input style */}
+      <style>{`
+        .input {
+          padding: 10px;
+          border-radius: 10px;
+          border: 1px solid #ddd;
+          outline: none;
+          transition: 0.2s;
+        }
+        .input:focus {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+        }
+      `}</style>
+          </div>
     </div>
   );
 };

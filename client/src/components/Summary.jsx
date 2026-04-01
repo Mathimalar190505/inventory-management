@@ -33,78 +33,92 @@ const Summary = () => {
     },[]);
 
     if(loading) {
-        return <div>Loading...</div>
+        return (
+            <div className="flex items-center justify-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-500"></div>
+            </div>
+        );
     }
-  return (
-    <div>
-      <h2 className='text-3xl font-bold'>Dashboard</h2>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6'>
-        <div className='bg-blue-500 text-white p-4 rounded-lg shadow-md flex flex-col items-center justify-center'>
-            <p className='text-lg font-semibold'>Total Products</p>
-            <p className='text-2xl font-bold'>{dashboardData.totalProducts}</p>
+  return (
+    <div className="p-8 bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
+      <h2 className='text-4xl font-extrabold text-gray-800 mb-8 tracking-tight'>Dashboard</h2>
+
+      {/* Top Cards */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10'>
+
+        <div className='bg-blue-500/90 backdrop-blur text-white p-6 rounded-2xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 text-center'>
+            <p className='text-sm opacity-80'>Total Products</p>
+            <p className='text-4xl font-bold mt-2'>{dashboardData.totalProducts}</p>
         </div>
-        <div className='bg-green-500 text-white p-4 rounded-lg shadow-md flex flex-col items-center justify-center'>
-            <p className='text-lg font-semibold'>Total Stock</p>
-            <p className='text-2xl font-bold'>{dashboardData.totalStock}</p>
+
+        <div className='bg-green-500/90 text-white p-6 rounded-2xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 text-center'>
+            <p className='text-sm opacity-80'>Total Stock</p>
+            <p className='text-4xl font-bold mt-2'>{dashboardData.totalStock}</p>
         </div>
-        <div className='bg-yellow-500 text-white p-4 rounded-lg shadow-md flex flex-col items-center justify-center'>
-            <p className='text-lg font-semibold'>Orders Total</p>
-            <p className='text-2xl font-bold'>{dashboardData.ordersToday}</p>
+
+        <div className='bg-yellow-500/90 text-white p-6 rounded-2xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 text-center'>
+            <p className='text-sm opacity-80'>Orders Today</p>
+            <p className='text-4xl font-bold mt-2'>{dashboardData.ordersToday}</p>
         </div>
-        <div className='bg-purple-500 text-white p-4 rounded-lg shadow-md flex flex-col items-center justify-center'>
-            <p className='text-lg font-semibold'>Revenue</p>
-            <p className='text-2xl font-bold'>${dashboardData.revenue}</p>
+
+        <div className='bg-purple-500/90 text-white p-6 rounded-2xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 text-center'>
+            <p className='text-sm opacity-80'>Revenue</p>
+            <p className='text-4xl font-bold mt-2'>${dashboardData.revenue}</p>
         </div>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-        <div className='bg-white p-4 rounded-lg shadow-md'>
-         <h3 className='text-xl font-semibold text-gray-800 mb-3'>
-            Out Of Stock products
-        </h3>
+      {/* Bottom Sections */}
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+
+        {/* Out of Stock */}
+        <div className='bg-white/80 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100'>
+         <h3 className='text-lg font-semibold text-gray-700 mb-4'>Out Of Stock</h3>
         {dashboardData.outofStock.length > 0 ? (
-            <ul className='space-y-2'>
+            <ul className='space-y-3 max-h-60 overflow-y-auto pr-2'>
                 {dashboardData.outofStock.map((product, index) => (
-                    <li key={index} className='text-gray-600'>
-                        {product.name}{" "}
-                        <span className='text-gray-400'>({product.category.name})</span>
+                    <li key={index} className='flex justify-between items-center text-sm bg-gray-50 p-2 rounded-lg'>
+                        <span className='font-medium'>{product.name}</span>
+                        <span className='text-gray-400 text-xs'>{product.category.name}</span>
                     </li>
                 ))}
             </ul>
         ):(
-            <p className='text-gray-500'>No products out of stock</p>
+            <p className='text-gray-400 text-sm'>No products out of stock</p>
         )}
         </div>
-         <div className='bg-white p-4 rounded-lg shadow-md'>
-         <h3 className='text-xl font-semibold text-gray-800 mb-3'>
-            Highest Sale products
-        </h3>
+
+        {/* Highest Sale */}
+        <div className='bg-white/80 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100'>
+         <h3 className='text-lg font-semibold text-gray-700 mb-4'>Highest Sale</h3>
         {dashboardData.highestSaleProduct?.name ?(
-          <div className='text-gray-600'>
-            <p><strong>Name:</strong>{dashboardData.highestSaleProduct.name}</p>
-            <p><strong>Category:</strong>{dashboardData.highestSaleProduct.category}</p>
-            <p><strong>Total Units Sold:</strong>{dashboardData.highestSaleProduct.totalQuantity}</p>
+          <div className='space-y-3 text-sm text-gray-700'>
+            <div className='flex justify-between'><span className='font-medium'>Name</span><span>{dashboardData.highestSaleProduct.name}</span></div>
+            <div className='flex justify-between'><span className='font-medium'>Category</span><span>{dashboardData.highestSaleProduct.category}</span></div>
+            <div className='flex justify-between'><span className='font-medium'>Units Sold</span><span>{dashboardData.highestSaleProduct.totalQuantity}</span></div>
           </div>
         ):(
-            <p>{dashboardData.highestSaleProduct?.message || 'Loading...'}</p>
+            <p className='text-gray-400 text-sm'>{dashboardData.highestSaleProduct?.message || 'Loading...'}</p>
         )}
         </div>
-         <div className='bg-white p-4 rounded-lg shadow-md'>
-         <h3 className='text-xl font-semibold text-gray-800 mb-3'>Low Stock products</h3>
+
+        {/* Low Stock */}
+        <div className='bg-white/80 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100'>
+         <h3 className='text-lg font-semibold text-gray-700 mb-4'>Low Stock</h3>
          {dashboardData.lowStock.length > 0 ? (
-            <ul className='bg-white p-4 rounded-lg shadow-md'>
+            <ul className='space-y-3 max-h-60 overflow-y-auto pr-2'>
                 {dashboardData.lowStock.map((product,index) => (
-                    <li key={index} className='text-gray-600'>
-                        <strong>{product.name}</strong> - {product.stock} left{" "}
-                        <span className='text-gray-400'>{product.categoryId.categoryName}</span>
+                    <li key={index} className='flex justify-between items-center text-sm bg-gray-50 p-2 rounded-lg'>
+                        <span className='font-medium'>{product.name}</span>
+                        <span className='text-red-400 text-xs font-semibold'>{product.stock} left</span>
                     </li>
                 ))}
             </ul>
          ):(
-            <p className='text-gray-500'>No low stock products</p>
+            <p className='text-gray-400 text-sm'>No low stock products</p>
          )}
         </div>
+
       </div>
     </div>
   )
