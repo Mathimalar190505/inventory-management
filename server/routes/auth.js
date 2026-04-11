@@ -1,5 +1,5 @@
 import express from 'express';
-import { login } from '../controllers/AuthController.js';
+import { login } from '../controllers/authController.js';
 import bcrypt from 'bcrypt';
 const router = express.Router();
 
