@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE from "../api";
 
 const Users = () => {
   const [formData, setFormData] = useState({
@@ -81,7 +82,7 @@ const Users = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/users/${id}`,
+      `${API_BASE}/api/users/${id}`,
          {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -117,7 +118,7 @@ const Users = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-lg font-semibold animate-pulse text-gray-600">
-          Loading categories...
+          Loading users...
         </div>
       </div>
     );

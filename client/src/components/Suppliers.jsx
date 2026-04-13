@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE from "../api";
 
 const Suppliers = () => {
   const [addModal, setAddModal] = useState(false);
@@ -129,7 +130,7 @@ const Suppliers = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/supplier/${id}`,
+          `${API_BASE}/api/supplier/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

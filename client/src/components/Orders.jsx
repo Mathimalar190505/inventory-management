@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE from "../api";
 
 const Orders = () => {
 
@@ -12,7 +13,7 @@ const Orders = () => {
       const token = localStorage.getItem("pos-token");
 
       const { data } = await axios.get(
-        "http://localhost:5000/api/orders",
+      `${API_BASE}/api/orders`,
         {
           headers: {
             Authorization: `Bearer ${token}`

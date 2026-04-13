@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE from "../api";
 
 const CustomerProducts = () => {
   const [categories, setCategories] = useState([]);
