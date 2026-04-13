@@ -15,6 +15,7 @@ dotenv.config();
 const app = express();
 app.use(cors({
   origin: "https://inventory-management-ruby-five.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
 app.use(express.json());
@@ -28,6 +29,11 @@ app.use('/api/dashboard',dashboardRoutes);
 // app.get("/", (req, res) => {
 //   res.send("API running without MongoDB 🚀");
 // });
+
+// test route
+app.get("/", (req, res) => {
+  res.send("API running 🚀");
+});
 const PORT = process.env.PORT || 5000;
 
 connectDB();
