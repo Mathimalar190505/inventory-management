@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import API_BASE from "../api";
 const Profile = () => {
 
   const [user, setUser] = useState({
@@ -16,7 +16,7 @@ const Profile = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/users/profile", {
+      const response = await fetch(  `${API_BASE}/api/users/profile`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
         },

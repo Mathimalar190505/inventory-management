@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE from "../api";
 
 const initialForm = {
   name: "",
@@ -28,7 +29,7 @@ const Products = () => {
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/products",
+          `${API_BASE}/api/products`,
         config
       );
       if (data.success) {
