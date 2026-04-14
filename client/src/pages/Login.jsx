@@ -23,6 +23,9 @@ const Login = () => {
         email,
         password,
       });
+      console.log("LOGIN HIT");
+      console.log("Response:", response.data);
+
 
     if (response.data.success) {
         localStorage.setItem("pos-token",response.data.token);
@@ -31,10 +34,11 @@ const Login = () => {
            navigate("/admin/dashboard"); 
         } else {
             navigate("/customer/dashboard");
-        }
+        }console.log("User found:", response.data.user);
     } else {
         alert(response.data.error);
     }
+
 
   } catch (error) {
      if(error.response) {

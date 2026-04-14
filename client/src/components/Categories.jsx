@@ -15,7 +15,7 @@ const Categories = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/category/",
+          `${API_BASE}/api/category/`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("pos-token")}`,

@@ -14,10 +14,14 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: "https://inventory-management-ruby-five.vercel.app",
+  origin: [
+    "http://localhost:5173",
+    "https://inventory-management-ruby-five.vercel.app"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
+
 app.use(express.json());
 app.use('/api/auth',authRoutes);
 app.use('/api/category',categoryRoutes);
